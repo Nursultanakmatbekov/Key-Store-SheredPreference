@@ -46,6 +46,8 @@ dependencies {
     implementation(libs.androidx.activity)
     implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.uiautomator)
+    implementation(libs.androidx.legacy.support.v4)
+    implementation(libs.androidx.fragment.ktx)
 
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.espresso.core)
@@ -74,7 +76,13 @@ dependencies {
     // Retrofit
     implementation(libs.bundles.retrofit)
     // okHttp
-    implementation(libs.okhttp3)
+    implementation(libs.okhttp3.okHttp)
+    implementation(libs.okhttp3.logging.interceptor)
+    //security
+    implementation(libs.security.crypto)
+    // Glide
+    implementation(libs.glide.glide)
+    kapt(libs.glide.glideCompiler)
     // Implementation project
     implementation(project(":domain"))
     implementation(project(":data"))

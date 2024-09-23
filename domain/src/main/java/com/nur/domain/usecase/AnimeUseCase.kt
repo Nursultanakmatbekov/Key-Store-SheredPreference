@@ -8,5 +8,4 @@ class AnimeUseCase @Inject constructor(
 ) {
     operator fun invoke() =
         repository.fetchAnime()
-
 }

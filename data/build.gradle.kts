@@ -38,19 +38,23 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    testImplementation("junit:junit:4.12")
     androidTestImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.espresso.core)
 
     // Coroutines
     implementation(libs.kotlin.coroutines.core)
-//    //hilt
+    //hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     // Retrofit
     implementation(libs.bundles.retrofit)
     // okHttp
-    implementation(libs.okhttp3)
+    implementation(libs.okhttp3.okHttp)
+    implementation(libs.okhttp3.logging.interceptor)
+    //security
+    implementation(libs.security.crypto)
 
     // Implementation project
     implementation(project(":domain"))

@@ -24,6 +24,14 @@ retrofit = "2.9.0"
 lifecycle = "2.7.0"
 kotlin-android = "1.9.22"
 hilt-android = "2.51"
+security-crypto = "1.1.0-alpha06"
+legacySupportV4 = "1.0.0"
+fragmentKtx = "1.8.3"
+okHttp = "4.10.0"
+#LoggingInterceptor
+loggingInterceptor = "5.0.0-alpha.2"
+#Glide
+glide = "4.15.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -44,6 +52,9 @@ navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.
 navigation-testing = { module = "androidx.navigation:navigation-testing", version = "2.8.0" }
 mockito-core = { module = "org.mockito:mockito-core", version = "3.12.4" }
 mockito-android = { module = "org.mockito:mockito-android", version = "3.12.4" }
+
+#security
+security-crypto = { module = "androidx.security:security-crypto", version.ref = "security-crypto" }
 
 #Lifecycle
 lifecycle-runtime-ktx = { group = "androidx.lifecycle", name = "lifecycle-runtime-ktx", version.ref = "lifecycle" }
@@ -66,13 +77,18 @@ retrofit-retrofit = { group = "com.squareup.retrofit2", name = "retrofit", versi
 retrofit-retrofitConverterGson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }
 
 #OkHttp
-okhttp3 = { group = "com.squareup.okhttp3", name = "okhttp" }
-okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor" }
+okhttp3-okHttp = { group = "com.squareup.okhttp3", name = "okhttp",version.ref = "okHttp" }
+okhttp3-logging-interceptor = { group = "com.squareup.okhttp3", name = "logging-interceptor",version.ref = "loggingInterceptor" }
 
 #ViewBindingDelegate
 viewBindingDelegate-viewBinding = { module = "com.github.kirich1409:viewbindingpropertydelegate-noreflection", version.ref = "viewBindingDelegate" }
 androidx-uiautomator = { group = "androidx.test.uiautomator", name = "uiautomator", version.ref = "uiautomator" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junit-ext" }
+androidx-legacy-support-v4 = { group = "androidx.legacy", name = "legacy-support-v4", version.ref = "legacySupportV4" }
+androidx-fragment-ktx = { group = "androidx.fragment", name = "fragment-ktx", version.ref = "fragmentKtx" }
+#Glide
+glide-glide = { module = "com.github.bumptech.glide:glide", version.ref = "glide" }
+glide-glideCompiler = { module = "com.github.bumptech.glide:compiler", version.ref = "glide" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
@@ -87,4 +103,3 @@ lifecycle = ["lifecycle-runtime-ktx", "lifecycle-livedata-ktx", "lifecycle-viewm
 #Retrofit
 retrofit = ["retrofit-retrofit", "retrofit-retrofitConverterGson"]
 navigation = ["navigation-fragment-ktx", "navigation-ui-ktx"]
-okhttp3 = ["okhttp3", "okhttp3-logging-interceptor"]

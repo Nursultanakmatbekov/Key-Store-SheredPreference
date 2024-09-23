@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.nur.data.local.prefs.TokenPreferenceHelper
 import com.nur.myapplication.R
 import com.nur.myapplication.databinding.FragmentHomeBinding
 import com.nur.myapplication.ui.adapter.AnimeAdapter
@@ -18,9 +19,13 @@ import com.nur.myapplication.ui.fragment.home.state.HomeIntent
 import com.nur.myapplication.ui.fragment.home.state.HomeState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class HomeFragment : Fragment() {
+
+    @Inject
+    lateinit var tokenPreferenceHelper: TokenPreferenceHelper
 
     private val viewModel: HomeViewModel by viewModels()
     private val binding by viewBinding(FragmentHomeBinding::bind)
@@ -30,7 +35,6 @@ class HomeFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_home, container, false)
     }
 
@@ -39,6 +43,7 @@ class HomeFragment : Fragment() {
         initialize()
         subscribeToAnime()
         viewModel.send(HomeIntent.LoadAnime())
+        setOnClickListeners()
     }
 
     private fun initialize() {
@@ -68,6 +73,16 @@ class HomeFragment : Fragment() {
                         }
                     }
                 }
+            }
+        }
+    }
+
+    private fun setOnClickListeners() {
+        binding.idBtn.setOnClickListener {
+            if (tokenPreferenceHelper.accessToken != null) {
+                Toast.makeText(requireContext(), "Токен доступен!", Toast.LENGTH_SHORT).show()
+            } else {
+                Toast.makeText(requireContext(), "Токен не найден, требуется аутентификация.", Toast.LENGTH_SHORT).show()
             }
         }
     }

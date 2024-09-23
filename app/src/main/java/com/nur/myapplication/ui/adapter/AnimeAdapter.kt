@@ -5,6 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.nur.myapplication.databinding.ItemAnimeBinding
 import com.nur.myapplication.models.AnimeUI
 
@@ -14,7 +15,10 @@ class AnimeAdapter : ListAdapter<AnimeUI, AnimeAdapter.AnimeViewHolder>(diffUtil
         RecyclerView.ViewHolder(binding.root) {
 
         fun onBind(item: AnimeUI) {
-            binding.tvName.text = item.attributes.description
+            Glide.with(binding.ivImage.context)
+                .load(item?.attributes?.posterImage?.original)
+                .into(binding.ivImage)
+            binding.tvName.text = item?.attributes?.titles?.enJp
         }
     }
 

@@ -32,11 +32,10 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-
     init {
         viewModelScope.launch {
-            intent.collect { userIntent ->
-                when (userIntent) {
+            intent.collect { intent ->
+                when (intent) {
                     is HomeIntent.LoadAnime -> fetchAnime()
                 }
             }

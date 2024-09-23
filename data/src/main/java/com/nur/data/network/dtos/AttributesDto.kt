@@ -7,10 +7,16 @@ data class AttributesDto(
     @SerializedName("description")
     val description: String = "",
     @SerializedName("status")
-    val status: String = ""
+    val status: String = "",
+    @SerializedName("posterImage")
+    val posterImage: PosterImageDto,
+    @SerializedName("titles")
+    val titles: TitlesDto
 )
 
 fun AttributesDto.toDomain(): Attributes = Attributes(
     description,
-    status
+    status,
+    posterImage.toDomain(),
+    titles.toDomain(),
 )
