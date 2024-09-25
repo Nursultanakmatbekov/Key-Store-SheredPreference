@@ -83,6 +83,7 @@ dependencies {
     // Glide
     implementation(libs.glide.glide)
     kapt(libs.glide.glideCompiler)
+
     // Implementation project
     implementation(project(":domain"))
     implementation(project(":data"))

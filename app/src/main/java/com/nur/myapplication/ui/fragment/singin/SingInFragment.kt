@@ -16,6 +16,7 @@ import com.nur.myapplication.ui.fragment.singin.state.SingInState
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import javax.inject.Inject
+
 @AndroidEntryPoint
 class SingInFragment : Fragment(R.layout.fragment_sing_in) {
 
@@ -27,18 +28,20 @@ class SingInFragment : Fragment(R.layout.fragment_sing_in) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        if (tokenPreferenceHelper.authIsShown) {
-            findNavController().navigate(R.id.action_singInFragment_to_homeFragment)
-        } else {
-            setupListeners()
-            observeViewModel()
-        }
+        setupListeners()
+        observeViewModel()
+
     }
 
     private fun setupListeners() {
         binding.btmSingin.setOnClickListener {
             if (validateInput()) {
-                viewModel.send(SignInIntent.Submit(binding.etEmail.text.toString(), binding.etPassword.text.toString()))
+                viewModel.send(
+                    SignInIntent.Submit(
+                        binding.etEmail.text.toString(),
+                        binding.etPassword.text.toString()
+                    )
+                )
             }
         }
     }
@@ -67,7 +70,7 @@ class SingInFragment : Fragment(R.layout.fragment_sing_in) {
         lifecycleScope.launch {
             viewModel.signInState.collect { state ->
                 when (state) {
-                    is SingInState.Idle -> { }
+                    is SingInState.Idle -> {}
 
                     is SingInState.Loading -> {
                         binding.progressBar.visibility = View.VISIBLE
@@ -79,13 +82,16 @@ class SingInFragment : Fragment(R.layout.fragment_sing_in) {
                         val loginResponse = state.loginResponse
                         if (loginResponse.isSuccess) {
                             loginResponse.map {
-                                tokenPreferenceHelper.refreshToken = it.refresh_token
-                                tokenPreferenceHelper.accessToken = it.access_token
+
                                 tokenPreferenceHelper.authIsShown = true
                                 findNavController().navigate(R.id.action_singInFragment_to_homeFragment)
                             }
                         } else {
-                            Toast.makeText(requireContext(), "Неверный пароль или email", Toast.LENGTH_SHORT).show()
+                            Toast.makeText(
+                                requireContext(),
+                                "Неверный пароль или email",
+                                Toast.LENGTH_SHORT
+                            ).show()
 
                         }
                     }

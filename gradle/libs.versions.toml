@@ -32,6 +32,7 @@ okHttp = "4.10.0"
 loggingInterceptor = "5.0.0-alpha.2"
 #Glide
 glide = "4.15.1"
+google_play_services = "18.0.1"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -52,6 +53,7 @@ navigation-ui-ktx = { module = "androidx.navigation:navigation-ui-ktx", version.
 navigation-testing = { module = "androidx.navigation:navigation-testing", version = "2.8.0" }
 mockito-core = { module = "org.mockito:mockito-core", version = "3.12.4" }
 mockito-android = { module = "org.mockito:mockito-android", version = "3.12.4" }
+safetynet = { module = "com.google.android.gms:play-services-safetynet", version.ref = "google_play_services" }
 
 #security
 security-crypto = { module = "androidx.security:security-crypto", version.ref = "security-crypto" }

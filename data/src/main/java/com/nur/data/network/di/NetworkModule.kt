@@ -1,6 +1,7 @@
 package com.nur.data.network.di
 
 import android.content.Context
+import com.nur.data.local.TokenManager
 import com.nur.data.local.prefs.TokenPreferenceHelper
 import com.nur.data.network.apiservice.AnimeApiService
 import com.nur.data.network.apiservice.SignInApiService
@@ -27,9 +28,33 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideTokenManager(@ApplicationContext context: Context): TokenManager {
+        return TokenManager(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTokenPreferenceHelper(
+        @ApplicationContext context: Context,
+        tokenManager: TokenManager
+    ): TokenPreferenceHelper {
+        return TokenPreferenceHelper(context, tokenManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTokenInterceptor(
+        tokenPreferenceHelper: TokenPreferenceHelper
+    ): TokenInterceptor {
+        return TokenInterceptor(tokenPreferenceHelper)
+    }
+
+    @Provides
+    @Singleton
     fun provideAuthenticatedRetrofit(tokenInterceptor: TokenInterceptor): Retrofit {
-        val httpLoggingInterceptor =
-            HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY)
+        val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
+            level = HttpLoggingInterceptor.Level.BODY
+        }
 
         val clientBuilder = OkHttpClient.Builder().apply {
             addInterceptor(httpLoggingInterceptor)
@@ -48,7 +73,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiService(retrofit: Retrofit): AnimeApiService {
+    fun provideAnimeApiService(retrofit: Retrofit): AnimeApiService {
         return retrofit.create(AnimeApiService::class.java)
     }
 
@@ -60,25 +85,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAuthService(retrofit: Retrofit): SignInApiService {
+    fun provideSignInApiService(retrofit: Retrofit): SignInApiService {
         return retrofit.create(SignInApiService::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideAuthRepository(apiService: SignInApiService): SingInRepository {
+    fun provideSignInRepository(apiService: SignInApiService): SingInRepository {
         return SingInRepositoryImpl(apiService)
-    }
-
-    @Provides
-    @Singleton
-    fun provideTokenPreferenceHelper(@ApplicationContext context: Context): TokenPreferenceHelper {
-        return TokenPreferenceHelper(context)
-    }
-
-    @Provides
-    @Singleton
-    fun provideTokenInterceptor(tokenPreferenceHelper: TokenPreferenceHelper): TokenInterceptor {
-        return TokenInterceptor(tokenPreferenceHelper)
     }
 }

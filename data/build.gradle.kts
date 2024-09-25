@@ -56,6 +56,8 @@ dependencies {
     //security
     implementation(libs.security.crypto)
 
+    implementation(libs.safetynet)
+
     // Implementation project
     implementation(project(":domain"))
 }

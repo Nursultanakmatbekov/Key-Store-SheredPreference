@@ -11,6 +11,7 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
 import by.kirich1409.viewbindingdelegate.viewBinding
+import com.google.android.material.snackbar.Snackbar
 import com.nur.data.local.prefs.TokenPreferenceHelper
 import com.nur.myapplication.R
 import com.nur.myapplication.databinding.FragmentHomeBinding
@@ -59,16 +60,13 @@ class HomeFragment : Fragment() {
                         }
 
                         is HomeState.Loading -> {
-                            progressBar.visibility = View.VISIBLE
                         }
 
                         is HomeState.Success -> {
-                            progressBar.visibility = View.GONE
                             animeAdapter.submitList(state.anime)
                         }
 
                         is HomeState.Error -> {
-                            progressBar.visibility = View.GONE
                             Toast.makeText(requireContext(), state.error, Toast.LENGTH_LONG).show()
                         }
                     }
@@ -80,9 +78,13 @@ class HomeFragment : Fragment() {
     private fun setOnClickListeners() {
         binding.idBtn.setOnClickListener {
             if (tokenPreferenceHelper.accessToken != null) {
-                Toast.makeText(requireContext(), "Токен доступен!", Toast.LENGTH_SHORT).show()
+                Snackbar.make(it, "Токен доступен!", Snackbar.LENGTH_SHORT).show()
             } else {
-                Toast.makeText(requireContext(), "Токен не найден, требуется аутентификация.", Toast.LENGTH_SHORT).show()
+                Snackbar.make(
+                    it,
+                    "Токен не найден, требуется аутентификация.",
+                    Snackbar.LENGTH_SHORT
+                ).show()
             }
         }
     }
